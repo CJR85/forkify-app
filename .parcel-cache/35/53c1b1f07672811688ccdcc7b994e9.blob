@@ -493,7 +493,7 @@ const controlRecipes = async function () {
 
     _recipeView.default.render(model.state.recipe);
   } catch (err) {
-    _recipeView.default.renderError();
+    console.log(err);
   }
 };
 
@@ -5072,9 +5072,7 @@ const loadRecipe = async function (id) {
     };
     console.log(state.recipe);
   } catch (err) {
-    // Temp error handling
-    console.error(`${err} ❌❌❌`);
-    throw err;
+    alert(err);
   }
 };
 
@@ -5899,10 +5897,6 @@ var _parentElement = new WeakMap();
 
 var _data = new WeakMap();
 
-var _errorMessage = new WeakMap();
-
-var _message = new WeakMap();
-
 var _clear = new WeakSet();
 
 var _generateMarkup = new WeakSet();
@@ -5925,16 +5919,6 @@ class RecipeView {
     _data.set(this, {
       writable: true,
       value: void 0
-    });
-
-    _errorMessage.set(this, {
-      writable: true,
-      value: 'We could not find that recipe. Please try another one.'
-    });
-
-    _message.set(this, {
-      writable: true,
-      value: ''
     });
   }
 
@@ -5962,29 +5946,12 @@ class RecipeView {
     _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', markup);
   }
 
-  renderError(message = _classPrivateFieldGet(this, _message)) {
+  renderError(message) {
     const markup = `
       <div class="error">
         <div>
           <svg>
             <use href="${_icons.default}#icon-alert-triangle"></use>
-          </svg>
-        </div>
-        <p>${message}</p>
-      </div>
-    `;
-
-    _classPrivateMethodGet(this, _clear, _clear2).call(this);
-
-    _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', markup);
-  }
-
-  renderError(message = _classPrivateFieldGet(this, _errorMessage)) {
-    const markup = `
-      <div class="message">
-        <div>
-          <svg>
-            <use href="${_icons.default}#icon-smile"></use>
           </svg>
         </div>
         <p>${message}</p>
