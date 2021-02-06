@@ -513,9 +513,8 @@ const controlSearchResults = async function () {
     if (!query) return; // 2) Load search results
 
     await model.loadSearchResults(query); // Render results
-    // resultsView.render(model.state.search.results);
 
-    _resultsView.default.render(model.getSearchResultsPage());
+    _resultsView.default.render(model.state.search.results);
   } catch (err) {
     console.log(err);
   }
@@ -5079,9 +5078,7 @@ const state = {
   recipe: {},
   search: {
     query: '',
-    results: [],
-    page: 1,
-    resultsPerPage: _config.RES_PER_PAGE
+    results: []
   }
 };
 exports.state = state;
@@ -5133,11 +5130,10 @@ const loadSearchResults = async function (query) {
 
 exports.loadSearchResults = loadSearchResults;
 
-const getSearchResultsPage = function (page = state.search.page) {
-  state.search.page = page;
-  const start = (page - 1) * state.search.resultsPerPage; // 0;
+const getSearchResultsPage = function (page) {
+  const start = (page - 1) * 10; // 0;
 
-  const end = page * state.search.resultsPerPage; // 9;
+  const end = page * 10; // 9;
 
   return state.search.results.slice(start, end);
 };
